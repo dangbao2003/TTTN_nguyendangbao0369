@@ -1,0 +1,91 @@
+﻿@using PagedList;
+@using PagedList.Mvc
+@model PagedList.IPagedList<webtgdd.Context.OrderDetail>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">OrderDetail</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">OrderDetail</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    @using (Html.BeginForm("Index", "OrderDetail", FormMethod.Get))
+    {
+        <p>
+            Tìm tên sản phẩm: @Html.TextBox("SearchString", ViewBag.CurrentFilter as String)
+            <input type="submit" value="Tìm Kiếm">
+        </p>
+    }
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Pice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().PiceDiscount)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PiceDiscount)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div class="page-info">
+        @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    </div>
+    <div class="pagination">
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>

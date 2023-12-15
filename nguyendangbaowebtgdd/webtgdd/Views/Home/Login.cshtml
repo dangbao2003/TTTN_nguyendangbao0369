@@ -1,0 +1,49 @@
+﻿
+@model webtgdd.Context.User
+
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="body-content">
+    <div class="container">
+        <div class="sign-in-page">
+            <div class="row">
+                <!-- Sign-in -->
+                <div class="col-md-6 col-sm-6 sign-in">
+                    <h4 class="">Sign in</h4>
+                    <p class="">Hello, Welcome to your account.</p>
+                    <div class="social-sign-in outer-top-xs">
+                        <a href="#" class="facebook-sign-in"><i class="fa fa-facebook"></i> Sign In with Facebook</a>
+                        <a href="#" class="twitter-sign-in"><i class="fa fa-twitter"></i> Sign In with Twitter</a>
+                    </div>
+                    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form class="register-form outer-top-xs" role="form">
+                            <div class="form-group">
+
+                                <label class="info-title" for="exampleInputEmail1">@Html.LabelFor(m => m.Email) <span>*</span></label>
+                                @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control unicase-form-control text-input", @placeholder = "Email" })
+                                
+                            </div>
+                            <div class="form-group">
+                                <label class="info-title" for="exampleInputPassword1">@Html.LabelFor(m => m.Password) <span>*</span></label>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control unicase-form-control text-input", @placeholder = "Password" })
+                               
+                            </div>
+                   
+                            <button type="submit" name="submit" class="btn-upper btn btn-primary checkout-page-button" value="Login">Login</button>
+                        </form>
+                    }
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Sign-in -->
+
+
+
+

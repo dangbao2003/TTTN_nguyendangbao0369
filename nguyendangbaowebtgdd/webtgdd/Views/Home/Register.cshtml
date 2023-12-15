@@ -1,0 +1,63 @@
+﻿@model webtgdd.Context.User
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- create a new account -->
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="body-content">
+        <div class="container">
+            <div class="sign-in-page">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 create-new-account">
+                        <h4 class="checkout-subtitle">Create a new account</h4>
+                        <p class="text title-tag-line">Create your new account.</p>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <form class="register-form outer-top-xs" role="form">
+                            <div class="form-group">
+                                <label class="info-title" for="exampleInputEmail2">@Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "info-title" }) <span>*</span> </label>
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control unicase-form-control text-input" } })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label class="info-title" for="exampleInputEmail1">@Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "info-title" }) <span>*</span></label>
+
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control unicase-form-control text-input" } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label class="info-title" for="exampleInputEmail1"> @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "info-title" }) <span>*</span></label>
+
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control unicase-form-control text-input" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label class="info-title" for="exampleInputEmail1"> @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "cinfo-title" }) <span>*</span></label>
+
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control unicase-form-control text-input" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                           
+                            <button type="submit" value="Create" class="btn-upper btn btn-primary checkout-page-button">Sign Up</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<!-- create a new account -->
+
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
