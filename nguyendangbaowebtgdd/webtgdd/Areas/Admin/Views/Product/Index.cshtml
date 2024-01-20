@@ -54,9 +54,10 @@
         </div><!-- /.container-fluid -->
     </div>
 
-    <p>
-        @Html.ActionLink("Tạo mới sản phẩm", "Create")
-    </p>
+    <div>
+        <button onclick="window.location.href='@Url.Action("Create")'" class="btn btn-primary">Tạo mới sản phẩm</button>
+    </div>
+    <hr/>
     @using (Html.BeginForm("Index", "Product", FormMethod.Get))
     {
         <p>
@@ -106,7 +107,10 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Avartar)
+                @if (!string.IsNullOrEmpty(item.Avartar))
+                {
+                    <img src="@Url.Content("~/Content/assets/images/products/" + item.Avartar)" alt="Product Image" style="max-width: 100px; max-height: 100px;" />
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CategoryId) <!-- Hiển thị tên danh mục -->

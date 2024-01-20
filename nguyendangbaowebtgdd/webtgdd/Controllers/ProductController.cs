@@ -3,25 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using webtgdd.Context;
 
 namespace webtgdd.Controllers
 {
     public class ProductController : Controller
     {
-        webtgddEntities objwebtgddEntities = new webtgddEntities();
-        // GET: Product
+        private webtgddEntities objwebtgddEntities = new webtgddEntities();
+        private const int PageSize = 10; // Number of products per page
+
+        // GET: Product/Detail/Id
         public ActionResult Detail(int Id)
         {
-            var objProduct = objwebtgddEntities.Products.Where(n => n.Id == Id).FirstOrDefault();
+            var objProduct = objwebtgddEntities.Products.FirstOrDefault(n => n.Id == Id);
             return View(objProduct);
         }
 
-        public ActionResult All()
+        // GET: Product/All?page=1
+        public ActionResult All(int? page)
         {
-            var lstProduct = objwebtgddEntities.Products.ToList();
+            var pageNumber = page ?? 1;
+            var lstProduct = objwebtgddEntities.Products.ToList().ToPagedList(pageNumber, PageSize);
+
             return View(lstProduct);
         }
-        
+        public ActionResult AllBrand(int? page)
+        {
+            var pageNumber = page ?? 1;
+            var lstProduct = objwebtgddEntities.Products.ToList().ToPagedList(pageNumber, PageSize);
+
+            return View(lstProduct);
+        }
     }
 }

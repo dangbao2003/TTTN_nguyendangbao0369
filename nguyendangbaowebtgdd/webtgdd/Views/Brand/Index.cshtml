@@ -1,0 +1,252 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<webtgdd.Context.Brand>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-inner">
+
+            <ul class="list-inline list-unstyled">
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li class='active'>Brand</li>
+            </ul>
+        </div>
+        <!-- /.breadcrumb-inner -->
+    </div>
+    <!-- /.container -->
+</div>
+<!-- /.breadcrumb -->
+<div class="clearfix filters-container m-t-10">
+    <div class="row">
+        <div class="col col-sm-6 col-md-2">
+            <div class="filter-tabs">
+                <ul id="filter-tabs" class="nav nav-tabs nav-tab-box nav-tab-fa-icon">
+                    <li class="active"> <a data-toggle="tab" href="#grid-container"><i class="icon fa fa-th-large"></i>Grid</a> </li>
+                    <li><a data-toggle="tab" href="#list-container"><i class="icon fa fa-th-list"></i>List</a></li>
+                </ul>
+            </div>
+            <!-- /.filter-tabs -->
+        </div>
+        <!-- /.col -->
+        <div class="col col-sm-12 col-md-6">
+            <div class="col col-sm-3 col-md-6 no-padding">
+                <div class="lbl-cnt">
+                    <span class="lbl">Sort by</span>
+                    <div class="fld inline">
+                        <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
+                            <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> Position <span class="caret"></span> </button>
+                            <ul role="menu" class="dropdown-menu">
+                                <li role="presentation"><a href="#">position</a></li>
+                                <li role="presentation"><a href="#">Price:Lowest first</a></li>
+                                <li role="presentation"><a href="#">Price:HIghest first</a></li>
+                                <li role="presentation"><a href="#">Product Name:A to Z</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.fld -->
+                </div>
+                <!-- /.lbl-cnt -->
+            </div>
+            <!-- /.col -->
+            <div class="col col-sm-3 col-md-6 no-padding">
+                <div class="lbl-cnt">
+                    <span class="lbl">Show</span>
+                    <div class="fld inline">
+                        <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
+                            <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> 1 <span class="caret"></span> </button>
+                            <ul role="menu" class="dropdown-menu">
+                                <li role="presentation"><a href="#">1</a></li>
+                                <li role="presentation"><a href="#">2</a></li>
+                                <li role="presentation"><a href="#">3</a></li>
+                                <li role="presentation"><a href="#">4</a></li>
+                                <li role="presentation"><a href="#">5</a></li>
+                                <li role="presentation"><a href="#">6</a></li>
+                                <li role="presentation"><a href="#">7</a></li>
+                                <li role="presentation"><a href="#">8</a></li>
+                                <li role="presentation"><a href="#">9</a></li>
+                                <li role="presentation"><a href="#">10</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.fld -->
+                </div>
+                <!-- /.lbl-cnt -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.col -->
+        <div class="col col-sm-6 col-md-4 text-right">
+            <div class="pagination-container">
+                <ul class="list-inline list-unstyled">
+                    <li class="prev"><a href="#"><i class="fa fa-angle-left"></i></a></li>
+                    <li><a href="#">1</a></li>
+                    <li class="active"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li class="next"><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                </ul>
+                <!-- /.list-inline -->
+            </div>
+            <!-- /.pagination-container -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+
+<div class="search-result-container ">
+    <div id="myTabContent" class="tab-content category-list">
+        <div class="tab-pane active " id="grid-container">
+
+            <div class="category-product">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-sm-4 col-md-2 wow fadeInUp">
+                            <div class="products">
+                                <div class="product">
+                                    <div class="product-image">
+                                        <div class="image"> <a href="@Url.Action("ProductBrand", "Brand", new {id = item.id} )"><img src="~/Content/assets/images/brands/@item.Avartar" alt=""></a> </div>
+                                        <!-- /.image -->
+                                        <div class="tag new"><span>50%</span></div>
+                                    </div>
+                                    <!-- /.product-image -->
+                                    <div class="product-info text-left">
+                                        <h3 class="name"><a href="@Url.Action("ProductBrand", "Brand", new {id = item.id} )">@item.Name</a></h3>
+
+
+                                        <!-- /.product-price -->
+                                    </div>
+                                    <!-- /.product-info -->
+                                    <!-- /.cart -->
+                                </div>
+                                <!-- /.product -->
+                            </div>
+                            <!-- /.products -->
+                        </div>
+                    }
+
+
+                    <!-- /.item -->
+
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.category-product -->
+
+        </div>
+        <!-- /.tab-pane -->
+
+    </div>
+    <!-- /.tab-content -->
+    <div class="clearfix filters-container">
+        <div class="text-right">
+            <div class="pagination-container">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
+            </div>
+        </div>
+    </div>
+    <!-- /.filters-container -->
+
+</div>
+<!-- /.search-result-container -->
+<!-- /.body-content -->
+<style>
+    .page-info {
+        margin-top: 10px; /* Adjust the top margin as needed */
+        font-size: 14px; /* Adjust the font size as needed */
+        color: #555; /* Adjust the text color as needed */
+    }
+
+    .pagination {
+        margin-top: 20px; /* Adjust the top margin as needed */
+        text-align: center; /* Center the pagination */
+    }
+
+        .pagination a,
+        .pagination span {
+            display: inline-block;
+            padding: 8px 12px; /* Adjust padding as needed */
+            margin: 0 4px; /* Adjust margin as needed */
+            border: 1px solid #ddd; /* Border color */
+            border-radius: 4px; /* Border radius */
+            color: #333; /* Text color */
+            text-decoration: none;
+            background-color: #fff; /* Background color */
+            transition: background-color 0.3s;
+        }
+
+            .pagination a:hover {
+                background-color: #f5f5f5; /* Hover background color */
+            }
+
+        .pagination .disabled,
+        .pagination .disabled:hover,
+        .pagination .disabled:focus {
+            color: #aaa; /* Disabled text color */
+            pointer-events: none; /* Disable pointer events for disabled items */
+            background-color: #eee; /* Disabled background color */
+            border-color: #ddd; /* Disabled border color */
+        }
+
+        .pagination .active,
+        .pagination .active:hover,
+        .pagination .active:focus {
+            z-index: 2;
+            color: #fff; /* Active text color */
+            background-color: #007bff; /* Active background color */
+            border-color: #007bff; /* Active border color */
+        }
+</style>
+<style>
+    .category-product {
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f8f8f8;
+        border-radius: 10px;
+    }
+
+
+
+    .col-sm-4 {
+        width: calc(16.666% - 20px);
+        margin: 10px;
+        box-sizing: border-box;
+        overflow: hidden;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .col-sm-4:hover {
+            transform: scale(1.05);
+        }
+
+    .product-image {
+        position: relative;
+        width: 100%;
+        padding-bottom: 100%;
+        overflow: hidden;
+    }
+
+    .image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .wow {
+        animation: fadeInUp 1s;
+    }
+</style>
+

@@ -11,116 +11,153 @@
     {
         @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>Product</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
+        <div class="form-horizontal">
+            <h4>Product</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Avartar, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" name="ImageUpload" />
-            @if (!string.IsNullOrEmpty(Model.Avartar))
-            {
-                <br />
-                <span>Ảnh trước đó: @Path.GetFileName(Model.Avartar)</span>
-            }
-            <input type="hidden" name="PreviousImage" value="@Model.Avartar" />
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Avartar, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" multiple name="ImageUpload" id="ImageUpload" onchange="previewImages(this);" />
+                    @if (!string.IsNullOrEmpty(Model.Avartar))
+                    {
+                        <span id="oldImageName">@Path.GetFileName(Model.Avartar)</span>
+                        <img src="@Model.Avartar" alt="Old Image" class="col-md-3" id="oldImagePreview" />
+                    }
+                    @Html.ValidationMessageFor(model => model.Avartar, "", new { @class = "text-danger" })
+                    <br />
+                    <div id="imagePreview" class="row"></div>
+                </div>
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <span>Tên danh mục trước đó: @Model.CategoryName</span>
-            @Html.DropDownListFor(model => model.CategoryId, (SelectList)ViewBag.CategoryList, "Chọn danh mục", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ShortDes, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ShortDes, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ShortDes, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.FullDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FullDescription, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FullDescription, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Pice, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Pice, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Pice, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.PiceDiscount, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.PiceDiscount, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.PiceDiscount, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.TypeId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.TypeId, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Slug, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Slug, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Slug, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.BrandId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <span>Tên thương hiệu trước đó: @Model.BrandName</span>
-            @Html.DropDownListFor(model => model.BrandId, (SelectList)ViewBag.BrandList, "Chọn thương hiệu", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.BrandId, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <span>Tên danh mục trước đó: @Model.CategoryName</span>
+                    @Html.DropDownListFor(model => model.CategoryId, (SelectList)ViewBag.CategoryList, "Chọn danh mục", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <div class="form-group">
+                @Html.LabelFor(model => model.ShortDes, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ShortDes, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ShortDes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FullDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FullDescription, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FullDescription, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Pice, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Pice, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Pice, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PiceDiscount, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PiceDiscount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PiceDiscount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TypeId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Slug, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Slug, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Slug, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BrandId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <span>Tên thương hiệu trước đó: @Model.BrandName</span>
+                    @Html.DropDownListFor(model => model.BrandId, (SelectList)ViewBag.BrandList, "Chọn thương hiệu", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.BrandId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
         </div>
-    </div>
-</div>
     }
 
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>
 </div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        var oldImagePreview = document.getElementById('oldImagePreview');
+        if (oldImagePreview) {
+            oldImagePreview.style.display = 'none'; // Ẩn ảnh cũ mặc định
+        }
+    });
+
+    function previewImages(input) {
+        var preview = document.querySelector('#imagePreview');
+        preview.innerHTML = '';
+
+        var oldImageName = document.getElementById('oldImageName');
+        var oldImagePreview = document.getElementById('oldImagePreview');
+        if (oldImageName && oldImagePreview && oldImagePreview.style.display === 'none') {
+            oldImagePreview.src = oldImageName.textContent;
+            oldImagePreview.style.display = 'block'; // Hiển thị ảnh cũ
+        }
+
+        if (input.files) {
+            var fileList = input.files;
+            for (var i = 0; i < Math.min(fileList.length, 4); i++) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var image = document.createElement('img');
+                    image.src = e.target.result;
+                    image.className = 'col-md-3';
+                    preview.appendChild(image);
+                }
+                reader.readAsDataURL(fileList[i]);
+            }
+        }
+    }
+</script>

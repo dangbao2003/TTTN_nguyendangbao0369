@@ -64,17 +64,32 @@ namespace webtgdd.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Product objProduct)
+        public ActionResult Create(Product objProduct, IEnumerable<HttpPostedFileBase> ImageUpload)
         {
             try
             {
-                if (objProduct.ImageUpload != null)
+                if (ImageUpload != null && ImageUpload.Count() > 0)
                 {
-                    string fileName = Path.GetFileNameWithoutExtension(objProduct.ImageUpload.FileName);
-                    string extension = Path.GetExtension(objProduct.ImageUpload.FileName);
-                    fileName = fileName + "_" + long.Parse(DateTime.Now.ToString("yyyyMMddhhmmss")) + extension;
-                    objProduct.Avartar = fileName;
-                    objProduct.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/assets/images/products"), fileName));
+                    int count = 0;
+                    foreach (var file in ImageUpload)
+                    {
+                        if (file != null && file.ContentLength > 0 && count < 5) // Lưu tối đa 5 hình ảnh
+                        {
+                            string fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                            string extension = Path.GetExtension(file.FileName);
+                            fileName = fileName + "_" + long.Parse(DateTime.Now.ToString("yyyyMMddhhmmss")) + extension;
+
+                            // Lưu tên file vào đối tượng Product
+                            if (count == 0)
+                            {
+                                objProduct.Avartar = fileName; // Lưu tên file đầu tiên vào trường Avartar
+                            }
+
+                            // Lưu file vào thư mục và đường dẫn cụ thể (ví dụ: ~/Content/assets/images/products)
+                            file.SaveAs(Path.Combine(Server.MapPath("~/Content/assets/images/products"), fileName));
+                            count++;
+                        }
+                    }
                 }
 
                 // Lấy tên danh mục từ categoryId
@@ -90,7 +105,7 @@ namespace webtgdd.Areas.Admin.Controllers
                 {
                     objProduct.BrandName = brand.Name;
                 }
-
+                // Lưu thông tin sản phẩm vào database
                 objwebtgddEntities.Products.Add(objProduct);
                 objwebtgddEntities.SaveChanges();
                 return RedirectToAction("Index");
@@ -118,6 +133,7 @@ namespace webtgdd.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+
         [HttpGet]
         public ActionResult Edit(int Id)
         {
@@ -128,28 +144,17 @@ namespace webtgdd.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Product objProduct)
+        public ActionResult Edit(Product objProduct, HttpPostedFileBase ImageUpload)
         {
             try
             {
-                // Lấy tên danh mục trước đó từ cơ sở dữ liệu
-                string previousCategoryName = objwebtgddEntities.Products
-                    .Where(p => p.Id == objProduct.Id)
-                    .Select(p => p.CategoryName)
-                    .FirstOrDefault();
-                // Lấy tên danh mục trước đó từ cơ sở dữ liệu
-                string previousBrandName = objwebtgddEntities.Products
-                    .Where(p => p.Id == objProduct.Id)
-                    .Select(p => p.BrandName)
-                    .FirstOrDefault();
-
                 // Lấy đường dẫn ảnh trước đó
                 string previousImage = objwebtgddEntities.Products
-                .Where(c => c.Id == objProduct.Id)
-                .Select(c => c.Avartar)
-                .FirstOrDefault();
+                    .Where(c => c.Id == objProduct.Id)
+                    .Select(c => c.Avartar)
+                    .FirstOrDefault();
 
-                if (objProduct.ImageUpload != null)
+                if (ImageUpload != null && ImageUpload.ContentLength > 0)
                 {
                     // Xóa ảnh trước đó (nếu có)
                     if (!string.IsNullOrEmpty(previousImage))
@@ -162,11 +167,11 @@ namespace webtgdd.Areas.Admin.Controllers
                     }
 
                     // Lưu ảnh mới
-                    string fileName = Path.GetFileNameWithoutExtension(objProduct.ImageUpload.FileName);
-                    string extension = Path.GetExtension(objProduct.ImageUpload.FileName);
+                    string fileName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
+                    string extension = Path.GetExtension(ImageUpload.FileName);
                     fileName = fileName + "_" + long.Parse(DateTime.Now.ToString("yyyyMMddhhmmss")) + extension;
                     objProduct.Avartar = fileName;
-                    objProduct.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/assets/images/products"), fileName));
+                    ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/assets/images/products"), fileName));
                 }
                 else
                 {
@@ -183,8 +188,7 @@ namespace webtgdd.Areas.Admin.Controllers
             {
                 return RedirectToAction("Index");
             }
-
-
         }
+
     }
 }

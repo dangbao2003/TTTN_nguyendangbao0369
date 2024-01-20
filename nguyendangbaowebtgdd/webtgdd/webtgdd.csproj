@@ -35,6 +35,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -177,6 +178,7 @@
     <Compile Include="Context\User.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\BrandController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2107,6 +2109,8 @@
     <Content Include="Content\assets\images\blog-post\blog_big_03.jpg" />
     <Content Include="Content\assets\images\blog-post\post1.jpg" />
     <Content Include="Content\assets\images\blog-post\post2.jpg" />
+    <Content Include="Content\assets\images\brands\apple.png" />
+    <Content Include="Content\assets\images\brands\samsung.png" />
     <Content Include="Content\assets\images\cart.jpg" />
     <Content Include="Content\assets\images\category\dienthoai.jpg" />
     <Content Include="Content\assets\images\category\laptop.jpg" />
@@ -2126,6 +2130,7 @@
     <Content Include="Content\assets\images\payments\4.png" />
     <Content Include="Content\assets\images\payments\5.png" />
     <Content Include="Content\assets\images\prev.png" />
+    <Content Include="Content\assets\images\products\638327041739877048_iphone-15-pro-max-2.jpg" />
     <Content Include="Content\assets\images\products\p1.jpg" />
     <Content Include="Content\assets\images\products\p10.jpg" />
     <Content Include="Content\assets\images\products\p11.jpg" />
@@ -2368,11 +2373,14 @@
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\Product\All.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Product\AllBrand.cshtml" />
+    <Content Include="Views\Brand\ProductBrand.cshtml" />
+    <Content Include="Views\Brand\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Content\assets\images\brands\" />
+    <Folder Include="Views\Module\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

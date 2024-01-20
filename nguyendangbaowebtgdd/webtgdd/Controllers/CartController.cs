@@ -17,7 +17,8 @@ namespace webtgdd.Controllers
         {
             return View((List<CartModel>)Session["cart"]);
         }
-
+        [HttpPost]
+        
         public ActionResult AddToCart(int id, int quantity)
         {
             if (Session["cart"] == null)

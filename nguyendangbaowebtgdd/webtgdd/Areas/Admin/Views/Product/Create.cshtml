@@ -29,9 +29,37 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Avartar, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            <input type="file" name="ImageUpload" />
+            <input type="file" multiple name="ImageUpload" id="ImageUpload" onchange="previewImages(this);" />
+            @Html.ValidationMessageFor(model => model.Avartar, "", new { @class = "text-danger" })
+            <br />
+            <div id="imagePreview" class="row"></div>
         </div>
     </div>
+
+   
+
+    <script>
+    function previewImages(input) {
+        var preview = document.querySelector('#imagePreview');
+        preview.innerHTML = '';
+        if (input.files) {
+            var fileList = input.files;
+            for (var i = 0; i < Math.min(fileList.length, 4); i++) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var image = document.createElement('img');
+                    image.src = e.target.result;
+                    image.className = 'col-md-3';
+                    preview.appendChild(image);
+                }
+                reader.readAsDataURL(fileList[i]);
+            }
+        }
+    }
+    </script>
+
+
+
 
     <div class="form-group">
         @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
